@@ -34,7 +34,7 @@ export default function App() {
 
     const addNewTodo = () => {
         let newTodo = {
-        id: items.length + 1,
+        id: Date.now(),
         title: text,
         completed: false,
         color: '#adc7b4',
