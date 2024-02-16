@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { Text, View, Button, TextInput, Alert, Modal, FlatList, SafeAreaView, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
@@ -7,19 +7,19 @@ import { styles } from "./App.style";
 
 const DATA = [
     {
-        id: '1',
+        id: 1,
         title: 'Meditation',
         completed: false,
         color: '#91b6f2',
     },
     {
-        id: '2',
+        id: 2,
         title: 'Coding',
         completed: false,
         color: '#c091f2',
     },
     {
-        id: '3',
+        id: 3,
         title: 'Journaling',
         completed: false,
         color: '#f2cd91',
@@ -53,13 +53,17 @@ export default function App() {
             updatedItems[itemIndex] = {...items[itemIndex], completed: true};
             setItems(updatedItems);
         }
-        console.log(items);
+    }
+
+    const deleteToDo = (item) => {
+        const newItems = items.filter((i) => i.id !== item.id);
+        setItems(newItems);
     }
 
     const TodoItem = ({ item }) => (
         <TouchableOpacity style={[styles.items, { backgroundColor: item.color}]} onPress={() => markItemCompleted(item)}>
             <Text style={item.completed ? styles.itemTextCompleted : styles.itemText}>{item.title}</Text>
-            <TouchableOpacity><AntDesign name="close" size={22} color="white" /></TouchableOpacity>
+            <TouchableOpacity onPress={() => deleteToDo(item)}><AntDesign name="close" size={22} color="white" /></TouchableOpacity>
         </TouchableOpacity>
     )
 
